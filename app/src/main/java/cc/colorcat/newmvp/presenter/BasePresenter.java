@@ -1,5 +1,7 @@
 package cc.colorcat.newmvp.presenter;
 
+import android.support.annotation.CallSuper;
+
 import cc.colorcat.newmvp.contract.IBase;
 
 /**
@@ -8,4 +10,8 @@ import cc.colorcat.newmvp.contract.IBase;
  */
 public abstract class BasePresenter<V extends IBase.View> implements IBase.Presenter<V> {
 
+    @CallSuper
+    @Override
+    public void onDestroy() {
+    }
 }

@@ -30,9 +30,9 @@ public class DemoPresenter extends BasePresenter<IDemo.View> implements IDemo.Pr
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         Log.v(TAG, "DemoPresenter.onDestroy()");
         mView = null;
+        super.onDestroy();
     }
 
     @Override

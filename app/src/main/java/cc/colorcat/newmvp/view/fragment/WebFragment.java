@@ -18,14 +18,14 @@ import cc.colorcat.newmvp.web.WebViewDelegate;
  * xx.ch@outlook.com
  */
 public class WebFragment extends BaseFragment implements IWeb.View {
-    private static final String KEY_URI = "KEY_URI";
+    private static final String KEY_URL = "HttpUrl";
 
     public static WebFragment newInstance(String url) {
         if (url == null || !url.startsWith("http")) {
             throw new IllegalArgumentException("Illegal url = " + url);
         }
         Bundle args = new Bundle();
-        args.putString(KEY_URI, url);
+        args.putString(KEY_URL, url);
         WebFragment fragment = new WebFragment();
         fragment.setArguments(args);
         return fragment;
@@ -40,7 +40,7 @@ public class WebFragment extends BaseFragment implements IWeb.View {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null && mUrl == null) {
-            mUrl = savedInstanceState.getString(KEY_URI);
+            mUrl = savedInstanceState.getString(KEY_URL);
         }
     }
 
@@ -75,7 +75,7 @@ public class WebFragment extends BaseFragment implements IWeb.View {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (mUrl != null) {
-            outState.putString(KEY_URI, mUrl);
+            outState.putString(KEY_URL, mUrl);
         }
     }
 
@@ -89,7 +89,7 @@ public class WebFragment extends BaseFragment implements IWeb.View {
     public String getUrl() {
         if (mUrl == null) {
             Bundle args = getArguments();
-            mUrl = args != null ? args.getString(KEY_URI) : null;
+            mUrl = args != null ? args.getString(KEY_URL) : null;
         }
         return mUrl;
     }

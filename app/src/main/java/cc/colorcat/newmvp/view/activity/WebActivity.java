@@ -19,7 +19,7 @@ import cc.colorcat.newmvp.web.WebViewDelegate;
  * xx.ch@outlook.com
  */
 public class WebActivity extends BaseActivity implements IWeb.View {
-    private static final String KEY_URI = "KEY_URI";
+    private static final String KEY_URL = "HttpUrl";
 
     public static void start(@NonNull Activity act, String url) {
         Op.nonNull(act, "act == null");
@@ -27,7 +27,7 @@ public class WebActivity extends BaseActivity implements IWeb.View {
             throw new IllegalArgumentException("Illegal url = " + url);
         }
         Intent i = new Intent(act, WebActivity.class);
-        i.putExtra(KEY_URI, url);
+        i.putExtra(KEY_URL, url);
         act.startActivity(i);
     }
 
@@ -42,7 +42,7 @@ public class WebActivity extends BaseActivity implements IWeb.View {
         setContentView(R.layout.layout_web);
 
         if (savedInstanceState != null && mUrl == null) {
-            mUrl = savedInstanceState.getString(KEY_URI);
+            mUrl = savedInstanceState.getString(KEY_URL);
         }
 
         mRootSrl = (SwipeRefreshLayout) findViewById(R.id.srl_root);
@@ -66,7 +66,7 @@ public class WebActivity extends BaseActivity implements IWeb.View {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (mUrl != null) {
-            outState.putString(KEY_URI, mUrl);
+            outState.putString(KEY_URL, mUrl);
         }
     }
 
@@ -79,7 +79,7 @@ public class WebActivity extends BaseActivity implements IWeb.View {
     @Override
     public String getUrl() {
         if (mUrl == null) {
-            mUrl = getIntent().getStringExtra(KEY_URI);
+            mUrl = getIntent().getStringExtra(KEY_URL);
         }
         return mUrl;
     }

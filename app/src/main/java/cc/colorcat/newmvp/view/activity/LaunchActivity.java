@@ -21,6 +21,7 @@ public class LaunchActivity extends BaseActivity implements View.OnClickListener
         findViewById(R.id.btn_to_demo_activity).setOnClickListener(this);
         findViewById(R.id.btn_to_demo_fragment).setOnClickListener(this);
         findViewById(R.id.btn_show_demo_dialog_fragment).setOnClickListener(this);
+        findViewById(R.id.btn_to_web).setOnClickListener(this);
     }
 
     @Override
@@ -34,6 +35,9 @@ public class LaunchActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.btn_show_demo_dialog_fragment:
                 new DemoDialogFragment().show(getFragmentManager(), "DemoDialogFragment");
+                break;
+            case R.id.btn_to_web:
+                WebActivity.start(this, "http://cn.bing.com");
                 break;
             default:
                 break;

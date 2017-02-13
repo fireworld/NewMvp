@@ -7,30 +7,29 @@ import cc.colorcat.newmvp.bean.User;
 import cc.colorcat.newmvp.net.Callback;
 
 /**
- * Created by cxx on 2017/2/8.
+ * Created by cxx on 2017/2/13.
  * xx.ch@outlook.com
  */
-public class SignInModel implements ISignInModel {
-    public static final String USER_NAME = "cxx";
-    public static final String USER_PASSWORD = "123456";
+public class SignInImpl extends BaseImpl<User> implements Api.ISignIn {
+    private static final String TEST_NAME = "cxx";
+    private static final String TEST_PASSWORD = "123456";
 
     private String username;
     private String password;
 
     @Override
-    public SignInModel setUsername(String username) {
+    public void setUsername(String username) {
         this.username = username;
-        return this;
     }
 
     @Override
-    public SignInModel setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
-        return this;
     }
 
     @Override
-    public void signIn(final Callback<User> callback) {
+    public Object call(final Callback<User> callback) {
+        tag = System.currentTimeMillis();
         new AsyncTask<String, Void, Boolean>() {
             @Override
             protected void onPreExecute() {
@@ -40,7 +39,7 @@ public class SignInModel implements ISignInModel {
             @Override
             protected Boolean doInBackground(String... strings) {
                 SystemClock.sleep(3000);
-                return USER_NAME.equals(strings[0]) && USER_PASSWORD.equals(strings[1]);
+                return TEST_NAME.equals(strings[0]) && TEST_PASSWORD.equals(strings[1]);
             }
 
             @Override
@@ -53,5 +52,6 @@ public class SignInModel implements ISignInModel {
                 callback.onFinish();
             }
         }.execute(username, password);
+        return tag;
     }
 }

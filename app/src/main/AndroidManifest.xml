@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="cc.colorcat.newmvp">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -19,7 +21,7 @@
 
         <activity android:name=".view.activity.DemoActivity"/>
         <activity android:name=".view.activity.DemoFragmentActivity"/>
-
+        <activity android:name=".view.activity.WebActivity"/>
     </application>
 
 </manifest>

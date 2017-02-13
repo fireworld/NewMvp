@@ -5,19 +5,19 @@ import android.util.Log;
 
 import cc.colorcat.newmvp.bean.User;
 import cc.colorcat.newmvp.contract.IDemo;
-import cc.colorcat.newmvp.model.ISignInModel;
-import cc.colorcat.newmvp.model.SignInModel;
+import cc.colorcat.newmvp.model.Api;
+import cc.colorcat.newmvp.model.SignInImpl;
 import cc.colorcat.newmvp.net.WeakCallback;
-import cc.colorcat.newmvp.util.TextTools;
+import cc.colorcat.newmvp.util.Op;
 
 /**
  * Created by cxx on 2017/2/8.
  * xx.ch@outlook.com
  */
 public class DemoPresenter extends BasePresenter<IDemo.View> implements IDemo.Presenter {
-    public static final String TAG = "Demo";
+    private static final String TAG = "Demo";
 
-    private ISignInModel mModel = new SignInModel();
+    private Api.ISignIn mModel = new SignInImpl();
     private String mUsername;
     private String mPassword;
     private IDemo.View mView;
@@ -38,7 +38,9 @@ public class DemoPresenter extends BasePresenter<IDemo.View> implements IDemo.Pr
     @Override
     public void toSignIn() {
         if (!checkToLogin()) return;
-        mModel.setUsername(mUsername).setPassword(mPassword).signIn(new WeakCallback<IDemo.View, User>(mView) {
+        mModel.setUsername(mUsername);
+        mModel.setPassword(mPassword);
+        mModel.call(new WeakCallback<IDemo.View, User>(mView) {
             @Override
             public void onStart(@NonNull IDemo.View view) {
                 Log.i(TAG, "WeakCallback.onStart() -- " + view.toString());
@@ -69,12 +71,12 @@ public class DemoPresenter extends BasePresenter<IDemo.View> implements IDemo.Pr
     private boolean checkToLogin() {
         boolean result = true;
         String username = mView.getUsername();
-        if (TextTools.isEmpty(username)) {
+        if (Op.isEmpty(username)) {
             mView.setUsernameError("empty");
             result = false;
         }
         String password = mView.getPassword();
-        if (TextTools.isEmpty(password) || password.length() < 6) {
+        if (Op.isEmpty(password) || password.length() < 6) {
             mView.setPasswordError("less than 6");
             result = false;
         }

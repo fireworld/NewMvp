@@ -1,6 +1,7 @@
 package cc.colorcat.newmvp.web;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -83,6 +84,11 @@ public class WebViewDelegate implements IWebView {
             mWebView.destroy();
             mWebView = null;
         }
+    }
+
+    @Override
+    public Context getContext() {
+        return mGroup.getContext();
     }
 
     protected void notifyPageStarted(WebView view, String url) {

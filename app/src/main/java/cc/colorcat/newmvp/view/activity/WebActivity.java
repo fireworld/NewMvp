@@ -1,6 +1,7 @@
 package cc.colorcat.newmvp.view.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -107,5 +108,10 @@ public class WebActivity extends BaseActivity implements IWeb.View {
     @Override
     public void onDestroyWebView() {
         mDelegate.onDestroyWebView();
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
     }
 }

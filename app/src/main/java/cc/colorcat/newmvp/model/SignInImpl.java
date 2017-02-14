@@ -29,7 +29,7 @@ public class SignInImpl extends BaseImpl<User> implements Api.ISignIn {
 
     @Override
     public Object call(final Callback<User> callback) {
-        tag = System.currentTimeMillis();
+        super.tag = System.currentTimeMillis();
         new AsyncTask<String, Void, Boolean>() {
             @Override
             protected void onPreExecute() {
@@ -52,6 +52,6 @@ public class SignInImpl extends BaseImpl<User> implements Api.ISignIn {
                 callback.onFinish();
             }
         }.execute(username, password);
-        return tag;
+        return super.tag;
     }
 }

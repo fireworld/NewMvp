@@ -37,53 +37,53 @@ public class DemoPresenter extends BasePresenter<IDemo.View> implements IDemo.Pr
 
     @Override
     public void toSignIn() {
-        if (!checkToLogin()) return;
-        mModel.setUsername(mUsername);
-        mModel.setPassword(mPassword);
-        mModel.call(new WeakCallback<IDemo.View, User>(mView) {
-            @Override
-            public void onStart(@NonNull IDemo.View view) {
-                Log.i(TAG, "WeakCallback.onStart() -- " + view.toString());
-                view.toast("login...");
-                view.setSubmitEnabled(false);
-            }
+        if (checkUsername() & checkPassword()) {
+            mModel.setUsername(mUsername);
+            mModel.setPassword(mPassword);
+            mModel.call(new WeakCallback<IDemo.View, User>(mView) {
+                @Override
+                public void onStart(@NonNull IDemo.View view) {
+                    Log.i(TAG, "WeakCallback.onStart() -- " + view.toString());
+                    view.toast("login...");
+                    view.setSubmitEnabled(false);
+                }
 
-            @Override
-            public void onSuccess(@NonNull IDemo.View view, @NonNull User user) {
-                Log.i(TAG, "WeakCallback.onSuccess() -- " + view.toString() + " -- " + user.toString());
-                view.onLoginSuccess(user);
-            }
+                @Override
+                public void onSuccess(@NonNull IDemo.View view, @NonNull User user) {
+                    Log.i(TAG, "WeakCallback.onSuccess() -- " + view.toString() + " -- " + user.toString());
+                    view.onLoginSuccess(user);
+                }
 
-            @Override
-            public void onFailure(@NonNull IDemo.View view, int code, @NonNull String msg) {
-                Log.i(TAG, "WeakCallback.onFailure() -- " + view.toString() + " -- " + code + " : " + msg);
-                view.onLoginFailure(msg);
-            }
+                @Override
+                public void onFailure(@NonNull IDemo.View view, int code, @NonNull String msg) {
+                    Log.i(TAG, "WeakCallback.onFailure() -- " + view.toString() + " -- " + code + " : " + msg);
+                    view.onLoginFailure(msg);
+                }
 
-            @Override
-            public void onFinish(@NonNull IDemo.View view) {
-                Log.i(TAG, "WeakCallback.onFinish() -- " + view.toString());
-                view.setSubmitEnabled(true);
-            }
-        });
+                @Override
+                public void onFinish(@NonNull IDemo.View view) {
+                    Log.i(TAG, "WeakCallback.onFinish() -- " + view.toString());
+                    view.setSubmitEnabled(true);
+                }
+            });
+        }
     }
 
-    private boolean checkToLogin() {
-        boolean result = true;
-        String username = mView.getUsername();
-        if (Op.isEmpty(username)) {
+    private boolean checkUsername() {
+        mUsername = mView.getUsername();
+        if (Op.isEmpty(mUsername)) {
             mView.setUsernameError("empty");
-            result = false;
+            return false;
         }
-        String password = mView.getPassword();
-        if (Op.isEmpty(password) || password.length() < 6) {
+        return true;
+    }
+
+    private boolean checkPassword() {
+        mPassword = mView.getPassword();
+        if (mPassword == null || mPassword.length() < 6) {
             mView.setPasswordError("less than 6");
-            result = false;
+            return false;
         }
-        if (result) {
-            mUsername = username;
-            mPassword = password;
-        }
-        return result;
+        return true;
     }
 }

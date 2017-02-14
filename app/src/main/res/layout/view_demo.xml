@@ -53,5 +53,6 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/bg_button"
         android:text="@string/submit"
+        android:textAllCaps="false"
         android:textColor="#FFF"/>
 </TableLayout>

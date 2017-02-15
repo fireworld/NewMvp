@@ -18,6 +18,7 @@ import cc.colorcat.newmvp.util.L;
 public class CoursePresenter extends BasePresenter<ICourse.View> implements ICourse.Presenter {
     private static final String TAG = CoursePresenter.class.getSimpleName();
     private Api.ICourse mModel = new CourseImpl();
+    private boolean mLoading = false;
     private ICourse.View mView;
 
     @Override
@@ -28,24 +29,28 @@ public class CoursePresenter extends BasePresenter<ICourse.View> implements ICou
 
     @Override
     public void toReloadCourses() {
-        mModel.setType("4");
-        mModel.setNumber(30);
-        mModel.call(new WeakCallback<ICourse.View, List<Course>>(mView) {
-            @Override
-            public void onSuccess(@NonNull ICourse.View view, @NonNull List<Course> courses) {
-                view.refresh(courses);
-            }
+        if (!mLoading) {
+            mLoading = true;
+            mModel.setType("4");
+            mModel.setNumber(30);
+            mModel.call(new WeakCallback<ICourse.View, List<Course>>(mView) {
+                @Override
+                public void onSuccess(@NonNull ICourse.View view, @NonNull List<Course> courses) {
+                    view.refresh(courses);
+                }
 
-            @Override
-            public void onFailure(@NonNull ICourse.View view, int code, @NonNull String msg) {
-                L.e(TAG, "code = " + code + ", msg = " + msg);
-            }
+                @Override
+                public void onFailure(@NonNull ICourse.View view, int code, @NonNull String msg) {
+                    L.e(TAG, "code = " + code + ", msg = " + msg);
+                }
 
-            @Override
-            public void onFinish(@NonNull ICourse.View view) {
-                view.hideRefresh();
-            }
-        });
+                @Override
+                public void onFinish(@NonNull ICourse.View view) {
+                    view.hideRefresh();
+                    mLoading = false;
+                }
+            });
+        }
     }
 
     @Override

@@ -1,7 +1,10 @@
 package cc.colorcat.newmvp.model;
 
+import java.util.List;
+
+import cc.colorcat.newmvp.bean.Course;
 import cc.colorcat.newmvp.bean.User;
-import cc.colorcat.newmvp.net.Callback;
+import cc.colorcat.newmvp.net.MCallback;
 
 /**
  * 网络请求接口
@@ -16,7 +19,7 @@ public interface Api {
      *
      * @param <Data> 返回的最终数据
      */
-    interface Base<Data> {
+    interface IBase<Data> {
 
         /**
          * 发出网络请求
@@ -24,21 +27,28 @@ public interface Api {
          * @param callback 网络请求回调
          * @return tag, 用于取消网络请求
          */
-        Object call(Callback<Data> callback);
+        Object call(MCallback<Data> callback);
 
         /**
          * 取消网络请求
          */
-        void cancel();
+        void cancel(Object tag);
     }
 
     /**
      * 登录，成功后返回 {@link User} 实例
      */
-    interface ISignIn extends Base<User> {
+    interface ISignIn extends IBase<User> {
 
         void setUsername(String username);
 
         void setPassword(String password);
+    }
+
+    interface ICourse extends IBase<List<Course>> {
+
+        void setType(String type);
+
+        void setNumber(int number);
     }
 }

@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.os.SystemClock;
 
 import cc.colorcat.newmvp.bean.User;
-import cc.colorcat.newmvp.net.Callback;
+import cc.colorcat.newmvp.net.MCallback;
 
 /**
  * Created by cxx on 2017/2/13.
@@ -27,9 +27,11 @@ public class SignInImpl extends BaseImpl<User> implements Api.ISignIn {
         this.password = password;
     }
 
+    /**
+     * 模拟网络请求
+     */
     @Override
-    public Object call(final Callback<User> callback) {
-        super.tag = System.currentTimeMillis();
+    public Object call(final MCallback<User> callback) {
         new AsyncTask<String, Void, Boolean>() {
             @Override
             protected void onPreExecute() {
@@ -52,6 +54,6 @@ public class SignInImpl extends BaseImpl<User> implements Api.ISignIn {
                 callback.onFinish();
             }
         }.execute(username, password);
-        return super.tag;
+        return System.currentTimeMillis();
     }
 }

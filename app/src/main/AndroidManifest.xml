@@ -22,6 +22,7 @@
         <activity android:name=".view.activity.DemoActivity"/>
         <activity android:name=".view.activity.DemoFragmentActivity"/>
         <activity android:name=".view.activity.WebActivity"/>
+        <activity android:name=".view.activity.CourseListActivity"/>
     </application>
 
 </manifest>

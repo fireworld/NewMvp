@@ -10,4 +10,6 @@
     <string name="to_demo_fragment">to demo fragment</string>
     <string name="show_demo_dialog_fragment">show demo dialog fragment</string>
     <string name="to_web">to web</string>
+    <string name="picture">picture</string>
+    <string name="show_course_list">show course list</string>
 </resources>

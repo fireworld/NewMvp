@@ -50,6 +50,9 @@ public class CoursePresenter extends BasePresenter<ICourse.View> implements ICou
 
     @Override
     public void toDeleteCourse(int position) {
+        /**
+         * something else
+         */
         mView.deleteCourse(position);
     }
 

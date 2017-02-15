@@ -98,9 +98,7 @@ public class CourseListActivity extends BaseActivity implements ICourse.View {
 
     @Override
     public void refresh(List<Course> courses) {
-        if (!mCourses.isEmpty()) {
-            mCourses.clear();
-        }
+        mCourses.clear();
         mCourses.addAll(courses);
         mAdapter.notifyDataSetChanged();
     }

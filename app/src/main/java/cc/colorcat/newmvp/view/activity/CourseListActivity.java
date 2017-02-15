@@ -44,10 +44,10 @@ public class CourseListActivity extends BaseActivity implements ICourse.View {
                 mPresenter.toReloadCourses();
             }
         });
-
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_courses);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setAdapter(createAdapter());
+
         mPresenter.onCreate(this);
     }
 

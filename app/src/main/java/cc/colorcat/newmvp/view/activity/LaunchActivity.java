@@ -22,6 +22,7 @@ public class LaunchActivity extends BaseActivity {
         findViewById(R.id.btn_to_demo_fragment).setOnClickListener(mClick);
         findViewById(R.id.btn_show_demo_dialog_fragment).setOnClickListener(mClick);
         findViewById(R.id.btn_to_web).setOnClickListener(mClick);
+        findViewById(R.id.btn_to_course_list).setOnClickListener(mClick);
     }
 
     private View.OnClickListener mClick = new View.OnClickListener() {
@@ -40,6 +41,8 @@ public class LaunchActivity extends BaseActivity {
                 case R.id.btn_to_web:
                     WebActivity.start(LaunchActivity.this, "http://cn.bing.com");
                     break;
+                case R.id.btn_to_course_list:
+                    navigateTo(CourseListActivity.class);
                 default:
                     break;
             }

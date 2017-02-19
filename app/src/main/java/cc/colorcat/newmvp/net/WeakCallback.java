@@ -12,7 +12,7 @@ import cc.colorcat.newmvp.contract.IBase;
  * Created by cxx on 16/7/13.
  * xx.ch@outlook.com
  */
-public abstract class WeakCallback<V extends IBase.View, T> implements Callback<T> {
+public abstract class WeakCallback<V extends IBase.View, T> implements MCallback<T> {
     private WeakReference<V> ref;
 
     public WeakCallback(V view) {

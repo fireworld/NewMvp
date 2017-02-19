@@ -26,7 +26,7 @@ import cc.colorcat.newmvp.view.activity.BaseActivity;
  * xx.ch@outlook.com
  */
 public abstract class BaseFragment extends Fragment implements IBase.View {
-    private static final int REQUEST_PERMISSION = 0x24123;
+    private static final int REQUEST_PERMISSION = 0x211;
 
     private PermissionListener mPermissionListener;
     private boolean mActive = false;
@@ -35,13 +35,14 @@ public abstract class BaseFragment extends Fragment implements IBase.View {
         Activity act = getActivity();
         if (act == null) return;
         mPermissionListener = listener;
-        List<String> denied = new LinkedList<>();
+        List<String> denied = null;
         for (String permission : permissions) {
             if (ContextCompat.checkSelfPermission(act, permission) != PackageManager.PERMISSION_GRANTED) {
+                if (denied == null) denied = new LinkedList<>();
                 denied.add(permission);
             }
         }
-        if (!denied.isEmpty()) {
+        if (denied != null) {
             ActivityCompat.requestPermissions(act, denied.toArray(new String[denied.size()]), REQUEST_PERMISSION);
         } else if (mPermissionListener != null) {
             mPermissionListener.onAllGranted();
@@ -53,15 +54,16 @@ public abstract class BaseFragment extends Fragment implements IBase.View {
     public final void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (mPermissionListener == null) return;
-        int size = grantResults.length;
+        final int size = grantResults.length;
         if (size > 0 && requestCode == REQUEST_PERMISSION) {
-            List<String> denied = new LinkedList<>();
+            List<String> denied = null;
             for (int i = 0; i < size; i++) {
                 if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                    if (denied == null) denied = new LinkedList<>();
                     denied.add(permissions[i]);
                 }
             }
-            if (denied.isEmpty()) {
+            if (denied == null) {
                 mPermissionListener.onAllGranted();
             } else {
                 mPermissionListener.onDenied(denied.toArray(new String[denied.size()]));
